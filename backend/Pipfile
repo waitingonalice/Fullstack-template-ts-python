@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+
+[dev-packages]
+black = "*"
+types-requests = "*"
+mypy = "*"
+pre-commit = "*"
+flake8 = "*"
+autoflake = "*"
+
+[requires]
+python_version = "3.11"
+
+[scripts]
+init = 'bash -c "pipenv install --dev && pre-commit install"'
+dev = "uvicorn app.main:app --reload --host 0.0.0.0"
+typecheck = "mypy -p app --ignore-missing-imports"
