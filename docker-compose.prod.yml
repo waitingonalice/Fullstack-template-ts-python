@@ -5,18 +5,14 @@ services:
     command: pipenv run dev
     ports:
       - "8000:8000"
-    volumes:
-      - ./backend:/src
 
   frontend:
     build:
       context: ./frontend
-      target: development
+      target: production
       args:
         NODE_VERSION: 20-alpine
     container_name: frontend
-    command: yarn run dev
+    command: yarn run start
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/src
