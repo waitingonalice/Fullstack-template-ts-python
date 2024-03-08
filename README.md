@@ -23,3 +23,9 @@ This set-up enables developers to run the application in a containerized environ
 It is also important to know that it is not necessary to have Docker installed to run the application. The application can be run locally without Docker, but it is not recommended.
 
 ### Installation
+
+To run the application in development mode, run the following command in the root directory of the project:
+
+```
+docker-compose up --build
+```

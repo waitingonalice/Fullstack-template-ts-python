@@ -7,3 +7,12 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/src
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    command: yarn run dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/src
