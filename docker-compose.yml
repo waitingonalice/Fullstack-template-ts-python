@@ -1,0 +1,9 @@
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    command: pipenv run dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/src

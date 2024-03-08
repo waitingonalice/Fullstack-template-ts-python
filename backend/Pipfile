@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+uvicorn = { extras = ["standard"] }
 
 [dev-packages]
 black = "*"
@@ -19,5 +20,5 @@ python_version = "3.11"
 
 [scripts]
 init = 'bash -c "pipenv install --dev && pre-commit install"'
-dev = "uvicorn app.main:app --reload --host 0.0.0.0"
+dev = "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
 typecheck = "mypy -p app --ignore-missing-imports"
