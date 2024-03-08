@@ -20,7 +20,7 @@ repos:
         args: [--line-length=79]
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 5.13.2
     hooks:
       - id: isort
 
@@ -33,7 +33,8 @@ repos:
     rev: 7.0.0
     hooks:
       - id: flake8
+
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "" # Use the sha or tag you want to point at
+    rev: "v4.0.0-alpha.8" # Use the sha or tag you want to point at
     hooks:
       - id: prettier
