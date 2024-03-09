@@ -3,7 +3,6 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  ignorePatterns: ["**/*.js", "**/*.cjs", "**/*.mjs", "**/*.d.ts"],
   extends: [
     "airbnb",
     "next/core-web-vitals",
