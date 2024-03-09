@@ -6,7 +6,7 @@ WORKDIR /app
 FROM base as dev
 
 COPY ./package.json ./yarn.lock /app/
-RUN yarn install --production --frozen-lockfile --non-interactive --cache-folder ./ycache; rm -rf ./ycache
+RUN yarn install --pure-lockfile --non-interactive --cache-folder ./ycache; rm -rf ./ycache
 
 COPY . /app/
 
