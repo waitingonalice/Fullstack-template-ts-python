@@ -29,3 +29,9 @@ To run the application in development mode, run the following command in the roo
 ```
 docker-compose up --build
 ```
+
+To run the application in production mode, run the following command in the root directory of the project:
+
+```
+docker-compose -f docker-compose.prod.yml up --build
+```
