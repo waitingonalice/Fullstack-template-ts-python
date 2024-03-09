@@ -1,10 +1,10 @@
 FROM python:3.11.0
 
-WORKDIR /src
+WORKDIR /app
 
-COPY ./Pipfile ./Pipfile.lock /src/
+COPY ./Pipfile ./Pipfile.lock /app/
 RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
 
-COPY . /src
+COPY . /app
 
 CMD ["pipenv", "run", "dev"]

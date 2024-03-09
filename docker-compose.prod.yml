@@ -1,18 +1,17 @@
 services:
+  frontend:
+    build:
+      context: ./frontend
+      target: prod
+    container_name: frontend
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+
   backend:
     build: ./backend
     container_name: backend
     command: pipenv run dev
     ports:
       - "8000:8000"
-
-  frontend:
-    build:
-      context: ./frontend
-      target: production
-      args:
-        NODE_VERSION: 20-alpine
-    container_name: frontend
-    command: yarn run start
-    ports:
-      - "3000:3000"

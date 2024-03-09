@@ -1,24 +1,41 @@
-ARG NODE_VERSION=20.11.0
-FROM node:${NODE_VERSION} as base
+FROM node:20-alpine as base
 
-WORKDIR /src
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
 
-FROM base as development
+FROM base as dev
 
-COPY ./package.json ./yarn.lock /src/
-RUN yarn install --production --pure-lockfile --non-interactive --cache-folder ./ycache; rm -rf ./ycache
+COPY ./package.json ./yarn.lock /app/
+RUN yarn install --production --frozen-lockfile --non-interactive --cache-folder ./ycache; rm -rf ./ycache
 
-COPY . /src/
+COPY . /app/
 
+FROM base as builder
+
+COPY --from=dev /app /app
 RUN yarn run build
 
 # Production build strips out dev dependencies and only copies the necessary files
-FROM base as production
+FROM base as prod
 
-COPY --from=development /src/.next /src/.next
-COPY --from=development /src/package.json /src/package.json
-COPY --from=development /src/public /src/public
-COPY --from=development /src/next.config.mjs /src/next.config.mjs
-COPY --from=development /src/node_modules /src/node_modules
+ENV NODE_ENV production
 
-CMD ["yarn","run","start"]
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public /app/public
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone /app
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static /app/.next/static
+
+USER nextjs
+
+ENV HOSTNAME "0.0.0.0"
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+CMD ["node", "server.js"]

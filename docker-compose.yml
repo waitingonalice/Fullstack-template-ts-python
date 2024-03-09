@@ -1,4 +1,19 @@
 services:
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    container_name: frontend
+    command: yarn run dev
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+
   backend:
     build: ./backend
     container_name: backend
@@ -7,16 +22,3 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/src
-
-  frontend:
-    build:
-      context: ./frontend
-      target: development
-      args:
-        NODE_VERSION: 20-alpine
-    container_name: frontend
-    command: yarn run dev
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/src
